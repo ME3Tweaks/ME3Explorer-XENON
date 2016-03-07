@@ -14,7 +14,7 @@ namespace ME3Explorer.Unreal
     public class PCCObject
     {
         public string pccFileName { get; private set; }
-        public static bool IsLittleEndian = true; //true PC, false xbox/PS3. Set when pcc loads
+        public bool IsLittleEndian = true; //true PC, false xbox/PS3. Set when pcc loads
         static int headerSize = 0x8E;
         public byte[] header = new byte[headerSize];
         byte[] extraNamesList = null;
@@ -108,12 +108,12 @@ namespace ME3Explorer.Unreal
             internal PCCObject pccRef;
             public int Link;
 
-            public int idxPackageFile { get { return SwapEndianness(BitConverter.ToInt32(data, 0)); } private set { Buffer.BlockCopy(BitConverter.GetBytes(value), 0, data, 0, sizeof(int)); } }
-            public int idxClassName { get { return SwapEndianness(BitConverter.ToInt32(data, 8)); } private set { Buffer.BlockCopy(BitConverter.GetBytes(value), 0, data, 8, sizeof(int)); } }
-            public int idxPackageName { get { return SwapEndianness(BitConverter.ToInt32(data, 16)) - 1; } private set { Buffer.BlockCopy(BitConverter.GetBytes(value + 1), 0, data, 16, sizeof(int)); } }
-            public int idxObjectName { get { return SwapEndianness(BitConverter.ToInt32(data, 20)); } private set { Buffer.BlockCopy(BitConverter.GetBytes(value), 0, data, 20, sizeof(int)); } }
-            public int idxLink { get { return SwapEndianness(BitConverter.ToInt32(data, 16)); } private set { Buffer.BlockCopy(BitConverter.GetBytes(value), 0, data, 16, sizeof(int)); } }
-            public int ObjectFlags { get { return SwapEndianness(BitConverter.ToInt32(data, 24)); } private set { Buffer.BlockCopy(BitConverter.GetBytes(value), 0, data, 24, sizeof(int)); } }
+            public int idxPackageFile { get { return pccRef.SwapEndianness(BitConverter.ToInt32(data, 0)); } private set { Buffer.BlockCopy(BitConverter.GetBytes(value), 0, data, 0, sizeof(int)); } }
+            public int idxClassName { get { return pccRef.SwapEndianness(BitConverter.ToInt32(data, 8)); } private set { Buffer.BlockCopy(BitConverter.GetBytes(value), 0, data, 8, sizeof(int)); } }
+            public int idxPackageName { get { return pccRef.SwapEndianness(BitConverter.ToInt32(data, 16)) - 1; } private set { Buffer.BlockCopy(BitConverter.GetBytes(value + 1), 0, data, 16, sizeof(int)); } }
+            public int idxObjectName { get { return pccRef.SwapEndianness(BitConverter.ToInt32(data, 20)); } private set { Buffer.BlockCopy(BitConverter.GetBytes(value), 0, data, 20, sizeof(int)); } }
+            public int idxLink { get { return pccRef.SwapEndianness(BitConverter.ToInt32(data, 16)); } private set { Buffer.BlockCopy(BitConverter.GetBytes(value), 0, data, 16, sizeof(int)); } }
+            public int ObjectFlags { get { return pccRef.SwapEndianness(BitConverter.ToInt32(data, 24)); } private set { Buffer.BlockCopy(BitConverter.GetBytes(value), 0, data, 24, sizeof(int)); } }
 
             public string ClassName { get { return pccRef.Names[idxClassName]; } }
             public string PackageFile { get { return pccRef.Names[idxPackageFile] + ".pcc"; } }
@@ -158,13 +158,13 @@ namespace ME3Explorer.Unreal
             public uint offset { get; set; }
             public int Link; // deprecated var, soon will be removed
 
-            public int idxClassName { get { return SwapEndianness(BitConverter.ToInt32(info, 0)); } set { Buffer.BlockCopy(BitConverter.GetBytes(value), 0, info, 0, sizeof(int)); } }
-            public int idxClassParent { get { return SwapEndianness(BitConverter.ToInt32(info, 4)); } set { Buffer.BlockCopy(BitConverter.GetBytes(value), 0, info, 4, sizeof(int)); } }
-            public int idxLink { get { return SwapEndianness(BitConverter.ToInt32(info, 8)); } set { Buffer.BlockCopy(BitConverter.GetBytes(value), 0, info, 8, sizeof(int)); } }
-            public int idxPackageName { get { return SwapEndianness(BitConverter.ToInt32(info, 8)) - 1; } set { Buffer.BlockCopy(BitConverter.GetBytes(value + 1), 0, info, 8, sizeof(int)); } }
-            public int idxObjectName { get { int objName = SwapEndianness(BitConverter.ToInt32(info, 12)); Debug.WriteLine("OBJ IDX FETCH: " + objName); return objName; } set { Buffer.BlockCopy(BitConverter.GetBytes(value), 0, info, 12, sizeof(int)); } }
-            public int indexValue { get { return SwapEndianness(BitConverter.ToInt32(info, 16)); } private set { Buffer.BlockCopy(BitConverter.GetBytes(value), 0, info, 16, sizeof(int)); } }
-            public int idxArchtypeName { get { return SwapEndianness(BitConverter.ToInt32(info, 20)); } private set { Buffer.BlockCopy(BitConverter.GetBytes(value), 0, info, 20, sizeof(int)); } }
+            public int idxClassName { get { return pccRef.SwapEndianness(BitConverter.ToInt32(info, 0)); } set { Buffer.BlockCopy(BitConverter.GetBytes(value), 0, info, 0, sizeof(int)); } }
+            public int idxClassParent { get { return pccRef.SwapEndianness(BitConverter.ToInt32(info, 4)); } set { Buffer.BlockCopy(BitConverter.GetBytes(value), 0, info, 4, sizeof(int)); } }
+            public int idxLink { get { return pccRef.SwapEndianness(BitConverter.ToInt32(info, 8)); } set { Buffer.BlockCopy(BitConverter.GetBytes(value), 0, info, 8, sizeof(int)); } }
+            public int idxPackageName { get { return pccRef.SwapEndianness(BitConverter.ToInt32(info, 8)) - 1; } set { Buffer.BlockCopy(BitConverter.GetBytes(value + 1), 0, info, 8, sizeof(int)); } }
+            public int idxObjectName { get { int objName = pccRef.SwapEndianness(BitConverter.ToInt32(info, 12)); return objName; } set { Buffer.BlockCopy(BitConverter.GetBytes(value), 0, info, 12, sizeof(int)); } }
+            public int indexValue { get { return pccRef.SwapEndianness(BitConverter.ToInt32(info, 16)); } private set { Buffer.BlockCopy(BitConverter.GetBytes(value), 0, info, 16, sizeof(int)); } }
+            public int idxArchtypeName { get { return pccRef.SwapEndianness(BitConverter.ToInt32(info, 20)); } private set { Buffer.BlockCopy(BitConverter.GetBytes(value), 0, info, 20, sizeof(int)); } }
             public long ObjectFlags { get { return BitConverter.ToInt64(info, 24); } set { Buffer.BlockCopy(BitConverter.GetBytes(value), 0, info, 64, sizeof(long)); } }
 
             public string ObjectName
@@ -173,7 +173,7 @@ namespace ME3Explorer.Unreal
                 {
                     if (idxObjectName > pccRef.Names.Count)
                     {
-                        return pccRef.Names[SwapEndianness(idxObjectName)];
+                        return pccRef.Names[pccRef.SwapEndianness(idxObjectName)];
                     }
                     return pccRef.Names[idxObjectName];
                 }
@@ -182,15 +182,15 @@ namespace ME3Explorer.Unreal
             {
                 get
                 {
-                    Debug.WriteLine("===GETTING CLASS NAMe===");
+                    //Debug.WriteLine("===GETTING CLASS NAMe===");
                     int val = idxClassName;
-                    Debug.WriteLine("GOT CLASS IDX. NOW Looking up class " + val + " BC LE? "+BitConverter.IsLittleEndian);
+                    //Debug.WriteLine("GOT CLASS IDX. NOW Looking up class " + val + " BC LE? "+BitConverter.IsLittleEndian);
                     if (val < 0)
                     {
                         int nameIndex = pccRef.Imports[val * -1 - 1].idxObjectName;
                         if (val * -1 > pccRef.Imports.Count)
                         {
-                            return pccRef.Names[SwapEndianness(nameIndex)];
+                            return pccRef.Names[pccRef.SwapEndianness(nameIndex)];
                         }
                         else
                         {
@@ -201,7 +201,7 @@ namespace ME3Explorer.Unreal
                     {
                         if (val > pccRef.Exports.Count)
                         {
-                            return pccRef.Names[SwapEndianness(pccRef.Exports[val].idxObjectName)];
+                            return pccRef.Names[pccRef.SwapEndianness(pccRef.Exports[val].idxObjectName)];
                         }
                         else
                         {
@@ -245,8 +245,8 @@ namespace ME3Explorer.Unreal
             }
             public string ArchtypeName { get { int val = idxArchtypeName; if (val < 0) return pccRef.Names[pccRef.Imports[val * -1 - 1].idxObjectName]; else if (val > 0) return pccRef.Names[pccRef.Exports[val].idxObjectName]; else return "None"; } }
 
-            public int DataSize { get { return SwapEndianness(BitConverter.ToInt32(info, 32)); } internal set { Buffer.BlockCopy(BitConverter.GetBytes(value), 0, info, 32, sizeof(int)); } }
-            public int DataOffset { get { return SwapEndianness(BitConverter.ToInt32(info, 36)); } internal set { Buffer.BlockCopy(BitConverter.GetBytes(value), 0, info, 36, sizeof(int)); } }
+            public int DataSize { get { return pccRef.SwapEndianness(BitConverter.ToInt32(info, 32)); } internal set { Buffer.BlockCopy(BitConverter.GetBytes(value), 0, info, 32, sizeof(int)); } }
+            public int DataOffset { get { return pccRef.SwapEndianness(BitConverter.ToInt32(info, 36)); } internal set { Buffer.BlockCopy(BitConverter.GetBytes(value), 0, info, 36, sizeof(int)); } }
             public int DataOffsetTmp;
             byte[] _data = null;
             public byte[] Data // holds data about export data
@@ -452,25 +452,25 @@ namespace ME3Explorer.Unreal
             }
         }
 
-        public static int SwapEndianness(int value)
+        public int SwapEndianness(int value)
         {
             if (BitConverter.IsLittleEndian != IsLittleEndian)
             {
-                Debug.Write("Swapping Endianness on "+value+", BCIL : ILE? " + BitConverter.IsLittleEndian + " " + IsLittleEndian);
+                //Debug.Write("Swapping Endianness on "+value+", BCIL : ILE? " + BitConverter.IsLittleEndian + " " + IsLittleEndian);
                 var b1 = (value >> 0) & 0xff;
                 var b2 = (value >> 8) & 0xff;
                 var b3 = (value >> 16) & 0xff;
                 var b4 = (value >> 24) & 0xff;
 
                 int ret = b1 << 24 | b2 << 16 | b3 << 8 | b4 << 0;
-                Debug.WriteLine("... now " + ret);
+                //Debug.WriteLine("... now " + ret);
                 return ret;
             }
-            Debug.WriteLine("Keeping Endianness on "+value+", BCIL : ILE? "+BitConverter.IsLittleEndian+" "+IsLittleEndian);
+            //Debug.WriteLine("Keeping Endianness on "+value+", BCIL : ILE? "+BitConverter.IsLittleEndian+" "+IsLittleEndian);
             return value; //don't bother
         }
 
-        public static int ForceSwapEndianness(int value)
+        public int ForceSwapEndianness(int value)
         {
             if (!IsLittleEndian)
             {

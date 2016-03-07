@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -126,7 +127,7 @@ namespace ME3Explorer.Unreal
         public static List<Property> getPropList(PCCObject pcc, byte[] raw)
         {
             Application.DoEvents();
-            int start = detectStart(pcc, raw);
+            int start = detectStart(pcc, raw, pcc.IsLittleEndian);
             return ReadProp(pcc,raw,start);
         }
 
@@ -237,6 +238,8 @@ namespace ME3Explorer.Unreal
 
         public static List<Property> ReadProp(PCCObject pcc, byte[] raw, int start)
         {
+            BitConverter.IsLittleEndian = pcc.IsLittleEndian;
+            Debug.WriteLine("LE? :" + pcc.IsLittleEndian);
             Property p;
             PropertyValue v;
             int sname;
@@ -244,10 +247,11 @@ namespace ME3Explorer.Unreal
             int pos = start;
             if(raw.Length - pos < 8)
                 return result;
-            int name = (int)BitConverter.ToInt64(raw, pos);
+            int name = (int)BitConverter.ToInt32(raw, pos);
             if (!pcc.isName(name))
                 return result;
             string t = pcc.Names[name];
+            Debug.WriteLine("Reading property: " + name + " " + pcc.Names[name]);
             if (pcc.Names[name] == "None")
             {
                 p = new Property();
@@ -257,12 +261,13 @@ namespace ME3Explorer.Unreal
                 p.offsetval = pos;
                 p.Size = 8;
                 p.Value = new PropertyValue();
-                p.raw = BitConverter.GetBytes((Int64)name);
+                p.raw = BitConverter.GetBytes(name);
                 p.offend = pos + 8;
                 result.Add(p);
                 return result;
             }
-            int type = (int)BitConverter.ToInt64(raw, pos + 8);            
+            int type = (int)BitConverter.ToInt32(raw, pos + 8);
+            Debug.WriteLine("Read type: " + type);
             int size = BitConverter.ToInt32(raw, pos + 16);
             int idx = BitConverter.ToInt32(raw, pos + 20);
             if (!pcc.isName(type) || size < 0 || size >= raw.Length)
@@ -395,6 +400,7 @@ namespace ME3Explorer.Unreal
 
         private static Type getType(PCCObject pcc, int type)
         {
+            Debug.WriteLine("Getting prop type: " + type);
             switch (pcc.getNameEntry(type))
             {
                 case "None": return Type.None;
@@ -439,8 +445,9 @@ namespace ME3Explorer.Unreal
             return v;
         }
 
-        public static int detectStart(PCCObject pcc, byte[] raw)
+        public static int detectStart(PCCObject pcc, byte[] raw, bool IsLittleEndian = true)
         {
+            BitConverter.IsLittleEndian = IsLittleEndian;
             int result = 8;
             int test1 = BitConverter.ToInt32(raw, 4);
             if (test1 < 0)
