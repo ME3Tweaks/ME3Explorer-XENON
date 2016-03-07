@@ -366,6 +366,7 @@
     <Compile Include="SubtitleScanner\SubtitleScanner.Designer.cs">
       <DependentUpon>SubtitleScanner.cs</DependentUpon>
     </Compile>
+    <Compile Include="Talkfiles.cs" />
     <Compile Include="Texplorer2.cs">
       <SubType>Form</SubType>
     </Compile>
