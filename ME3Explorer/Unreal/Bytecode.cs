@@ -343,9 +343,9 @@ namespace ME3Explorer.Unreal
 
         public static string ToRawText(byte[]raw,PCCObject Pcc,bool debug = false)
         {
-            BitConverter.IsLittleEndian = true;
             string s = "";
             pcc = Pcc;
+            BitConverter.IsLittleEndian = pcc.IsLittleEndian;
             memory = raw;
             memsize = raw.Length;
             DebugCounter = 0;
@@ -2936,7 +2936,7 @@ namespace ME3Explorer.Unreal
         //    Token t = new Token();
         //    Token a = ReadToken(start + 2);
         //    int pos = start + a.raw.Length + 2;
-        //    BitConverter.IsLittleEndian = true;
+        //    BitConverter.IsLittleEndian = pcc.IsLittleEndian;
         //    //int index = BitConverter.ToInt32(memory, pos);
         //    //string s = pcc.getObjectName(index);
         //    //pos += 4;
@@ -3225,7 +3225,7 @@ namespace ME3Explorer.Unreal
         private static Token ReadArrayArg2(int start, string arg,bool skip2byte)
         {
             Token t = new Token();
-            BitConverter.IsLittleEndian = true;
+            BitConverter.IsLittleEndian = pcc.IsLittleEndian;
             int pos = start + 1;
             Token a = ReadToken(pos);
             pos += a.raw.Length;
@@ -3246,7 +3246,7 @@ namespace ME3Explorer.Unreal
         private static Token ReadArrayArg(int start,string arg)
         {
             Token t = new Token();
-            BitConverter.IsLittleEndian = true;
+            BitConverter.IsLittleEndian = pcc.IsLittleEndian;
             int pos = start + 1;
             Token a = ReadToken(pos);
             pos += a.raw.Length + 2;
@@ -3266,7 +3266,7 @@ namespace ME3Explorer.Unreal
         private static Token ReadUnkn1b(int start)
         {
             Token t = new Token();
-            BitConverter.IsLittleEndian = true;
+            BitConverter.IsLittleEndian = pcc.IsLittleEndian;
             int index = BitConverter.ToInt32(memory, start + 1);
             //string s = "";
             //if (index > 0 && index <= pcc.ExportCount)
@@ -3287,7 +3287,7 @@ namespace ME3Explorer.Unreal
         private static Token ReadCase(int start)
         {
             Token t = new Token();
-            BitConverter.IsLittleEndian = true;
+            BitConverter.IsLittleEndian = pcc.IsLittleEndian;
             int pos = start + 1;
             int size = BitConverter.ToInt16(memory, pos);
             pos += 2;
@@ -3305,7 +3305,7 @@ namespace ME3Explorer.Unreal
         private static Token ReadMetacast(int start)
         {
             Token t = new Token();
-            BitConverter.IsLittleEndian = true;
+            BitConverter.IsLittleEndian = pcc.IsLittleEndian;
             int pos = start + 1;
             int index = BitConverter.ToInt32(memory, pos);
             string s = "";
@@ -3328,7 +3328,7 @@ namespace ME3Explorer.Unreal
         private static Token ReadVectorConst(int start)
         {
             Token t = new Token();
-            BitConverter.IsLittleEndian = true;
+            BitConverter.IsLittleEndian = pcc.IsLittleEndian;
             int pos = start + 1;
             float f1 = BitConverter.ToSingle(memory, pos);
             float f2 = BitConverter.ToSingle(memory, pos + 4);
@@ -3345,7 +3345,7 @@ namespace ME3Explorer.Unreal
         private static Token ReadRotatorConst(int start)
         {
             Token t = new Token();
-            BitConverter.IsLittleEndian = true;
+            BitConverter.IsLittleEndian = pcc.IsLittleEndian;
             int pos = start + 1;
             int i1 = BitConverter.ToInt32(memory, pos);
             int i2 = BitConverter.ToInt32(memory, pos + 4);
@@ -3362,7 +3362,7 @@ namespace ME3Explorer.Unreal
         private static Token ReadConditional(int start)
         {
             Token t = new Token();
-            BitConverter.IsLittleEndian = true;
+            BitConverter.IsLittleEndian = pcc.IsLittleEndian;
             int pos = start + 1;
             Token a = ReadToken(pos);
             pos += a.raw.Length;
@@ -3398,7 +3398,7 @@ namespace ME3Explorer.Unreal
         private static Token ReadUnkn8(int start)
         {
             Token t = new Token();
-            BitConverter.IsLittleEndian = true;
+            BitConverter.IsLittleEndian = pcc.IsLittleEndian;
             int index = BitConverter.ToInt32(memory, start + 1);
             t.text = "If(" + pcc.getObjectName(index) + "){";
             int pos = start + 8;
@@ -3425,7 +3425,7 @@ namespace ME3Explorer.Unreal
         private static Token ReadUnkn7(int start)
         {
             Token t = new Token();
-            BitConverter.IsLittleEndian = true;
+            BitConverter.IsLittleEndian = pcc.IsLittleEndian;
             int index = (Int32)BitConverter.ToInt32(memory, start + 1);
             t.text = "If(" + pcc.getObjectName(index) + ")\n\t{\n";
             int pos = start + 8;
@@ -3453,7 +3453,7 @@ namespace ME3Explorer.Unreal
         private static Token ReadEmptyDel(int start)
         {
             Token t = new Token();
-            BitConverter.IsLittleEndian = true;
+            BitConverter.IsLittleEndian = pcc.IsLittleEndian;
             int pos = start + 1;
             Token a = ReadToken(pos);
             pos += a.raw.Length;
@@ -3469,7 +3469,7 @@ namespace ME3Explorer.Unreal
         private static Token ReadStruct(int start)
         {
             Token t = new Token();
-            BitConverter.IsLittleEndian = true;
+            BitConverter.IsLittleEndian = pcc.IsLittleEndian;
             int field = BitConverter.ToInt32(memory, start + 1);
             int type = BitConverter.ToInt32(memory, start + 5);
             int skip = BitConverter.ToInt16(memory, start + 7);
@@ -3529,7 +3529,7 @@ namespace ME3Explorer.Unreal
         private static Token ReadUnkn6(int start)
         {
             Token t = new Token();
-            BitConverter.IsLittleEndian = true;
+            BitConverter.IsLittleEndian = pcc.IsLittleEndian;
             int index = (Int32)BitConverter.ToInt64(memory, start + 1);
             t.text = pcc.getNameEntry(index);
             int pos = start + 11;
@@ -3559,7 +3559,7 @@ namespace ME3Explorer.Unreal
         private static Token ReadExtNative(int start)
         {
             Token t = new Token();
-            BitConverter.IsLittleEndian = true;
+            BitConverter.IsLittleEndian = pcc.IsLittleEndian;
             int index = (Int32)BitConverter.ToInt64(memory, start + 1);
             t.text = pcc.getObjectName(index);
             int pos = start + 11;
@@ -3626,7 +3626,7 @@ namespace ME3Explorer.Unreal
         private static Token ReadIterator(int start)
         {
             Token t = new Token();
-            BitConverter.IsLittleEndian = true;            
+            BitConverter.IsLittleEndian = pcc.IsLittleEndian;            
             int pos = start + 1;
             Token a = ReadToken(pos);
             pos += a.raw.Length + 2;
@@ -3674,7 +3674,7 @@ namespace ME3Explorer.Unreal
         private static Token ReadUnkn4(int start)
         {
             Token t = new Token();
-            BitConverter.IsLittleEndian = true;
+            BitConverter.IsLittleEndian = pcc.IsLittleEndian;
             int index = BitConverter.ToInt32(memory, start + 1);
             t.text = pcc.getObjectName(index);
             t.raw = new byte[5];
@@ -3721,7 +3721,7 @@ namespace ME3Explorer.Unreal
         private static Token ReadUnkn3(int start)
         {
             Token t = new Token();
-            BitConverter.IsLittleEndian = true;
+            BitConverter.IsLittleEndian = pcc.IsLittleEndian;
             int index = BitConverter.ToInt32(memory, start + 1);
             t.text = pcc.getObjectName(index);
             t.raw = new byte[5];
@@ -3734,7 +3734,7 @@ namespace ME3Explorer.Unreal
         private static Token ReadLocOutVar(int start)
         {
             Token t = new Token();
-            BitConverter.IsLittleEndian = true;
+            BitConverter.IsLittleEndian = pcc.IsLittleEndian;
             int index = BitConverter.ToInt32(memory, start + 1);
             t.text = pcc.getObjectName(index);
             t.raw = new byte[5];
@@ -3760,7 +3760,7 @@ namespace ME3Explorer.Unreal
         private static Token ReadByteConst(int start)
         {
             Token t = new Token();
-            BitConverter.IsLittleEndian = true;
+            BitConverter.IsLittleEndian = pcc.IsLittleEndian;
             int n = memory[start + 1];
             t.text = n.ToString();
             t.raw = new byte[2];
@@ -3772,7 +3772,7 @@ namespace ME3Explorer.Unreal
         private static Token ReadIntConst(int start)
         {
             Token t = new Token();
-            BitConverter.IsLittleEndian = true;
+            BitConverter.IsLittleEndian = pcc.IsLittleEndian;
             int n = (Int32)BitConverter.ToInt32(memory, start + 1);
             t.text = n.ToString();
             t.raw = new byte[5];
@@ -3793,7 +3793,7 @@ namespace ME3Explorer.Unreal
         private static Token ReadDelegateProp(int start)
         {
             Token t = new Token();
-            BitConverter.IsLittleEndian = true;
+            BitConverter.IsLittleEndian = pcc.IsLittleEndian;
             int index = (Int32)BitConverter.ToInt64(memory, start + 1);
             t.text = pcc.getNameEntry(index);
             t.raw = new byte[13];
@@ -3805,7 +3805,7 @@ namespace ME3Explorer.Unreal
         private static Token ReadInstDelegate(int start)
         {
             Token t = new Token();
-            BitConverter.IsLittleEndian = true;
+            BitConverter.IsLittleEndian = pcc.IsLittleEndian;
             int index = (Int32)BitConverter.ToInt64(memory, start + 1);
             t.text = pcc.getNameEntry(index);
             t.raw = new byte[9];
@@ -3817,7 +3817,7 @@ namespace ME3Explorer.Unreal
         private static Token ReadObjectConst(int start)
         {
             Token t = new Token();
-            BitConverter.IsLittleEndian = true;
+            BitConverter.IsLittleEndian = pcc.IsLittleEndian;
             int index = (Int32)BitConverter.ToInt32(memory, start + 1);
             t.text = " '" + pcc.getObjectName(index) + "'";
             if (index > 0 && index <= pcc.Exports.Count)
@@ -3833,7 +3833,7 @@ namespace ME3Explorer.Unreal
         private static Token ReadFinalFunc(int start)
         {
             Token t = new Token();
-            BitConverter.IsLittleEndian = true;
+            BitConverter.IsLittleEndian = pcc.IsLittleEndian;
             int index = (Int32)BitConverter.ToInt32(memory, start + 1);
             t.text = pcc.getObjectName(index) + "(";
             int pos = start + 5;
@@ -3861,7 +3861,7 @@ namespace ME3Explorer.Unreal
         private static Token ReadUnkn1(int start)
         {
             Token t = new Token();
-            BitConverter.IsLittleEndian = true;
+            BitConverter.IsLittleEndian = pcc.IsLittleEndian;
             int index = (Int32)BitConverter.ToInt32(memory, start + 1);
             t.text = pcc.getObjectName(index);
             t.raw = new byte[5];
@@ -3873,7 +3873,7 @@ namespace ME3Explorer.Unreal
         private static Token ReadNameConst(int start)
         {
             Token t = new Token();
-            BitConverter.IsLittleEndian = true;
+            BitConverter.IsLittleEndian = pcc.IsLittleEndian;
             int index = (Int32)BitConverter.ToInt64(memory, start + 1);
             t.text = "'" + pcc.getNameEntry(index) + "'";
             t.raw = new byte[9];
@@ -3940,7 +3940,7 @@ namespace ME3Explorer.Unreal
         private static Token ReadByteToInt(int start)
         {
             Token t = new Token();
-            BitConverter.IsLittleEndian = true;
+            BitConverter.IsLittleEndian = pcc.IsLittleEndian;
             int index = (Int32)BitConverter.ToInt64(memory, start + 1);
             t.text = "ByteToInt(" + pcc.getObjectName(index) + ")";
             t.raw = new byte[5];
@@ -4110,7 +4110,7 @@ namespace ME3Explorer.Unreal
         {
             Token t = new Token();
             t.text = "";
-            BitConverter.IsLittleEndian = true;
+            BitConverter.IsLittleEndian = pcc.IsLittleEndian;
             int index = BitConverter.ToInt32(memory, start + 1);
             if (index > 0 && index <= pcc.Exports.Count)
             {
@@ -4135,7 +4135,7 @@ namespace ME3Explorer.Unreal
         private static Token ReadLocalVar(int start)
         {
             Token t = new Token();
-            BitConverter.IsLittleEndian = true;
+            BitConverter.IsLittleEndian = pcc.IsLittleEndian;
             int index = BitConverter.ToInt32(memory, start + 1);
             t.text = pcc.getObjectName(index);
             t.raw = new byte[5];
@@ -4163,7 +4163,7 @@ namespace ME3Explorer.Unreal
         {
             Token t = new Token();
             t.text = "Goto(0x";
-            BitConverter.IsLittleEndian = true;
+            BitConverter.IsLittleEndian = pcc.IsLittleEndian;
             int index = BitConverter.ToInt16(memory, start + 1);
             t.text += index.ToString("X") + ")";
             t.raw = new byte[3];
@@ -4178,7 +4178,7 @@ namespace ME3Explorer.Unreal
             t.text = "";
             BitConverter.IsLittleEndian = false;
             int index = BitConverter.ToInt32(memory, start + 1);
-            BitConverter.IsLittleEndian = true;
+            BitConverter.IsLittleEndian = pcc.IsLittleEndian;
             if (index >= 0 && index < pcc.Names.Count)
                 t.text = pcc.getNameEntry(index);
             else
