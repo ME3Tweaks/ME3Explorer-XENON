@@ -56,6 +56,7 @@
             this.debugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.getDumpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.getDumpToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.dumpGUIFilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.Button1 = new System.Windows.Forms.ToolStripButton();
             this.Button2 = new System.Windows.Forms.ToolStripButton();
@@ -117,7 +118,6 @@
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.hb2 = new Be.Windows.Forms.HexBox();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.dumpGUIFilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -357,6 +357,13 @@
             this.getDumpToolStripMenuItem1.Text = "Get Binary Dump";
             this.getDumpToolStripMenuItem1.Click += new System.EventHandler(this.getDumpToolStripMenuItem1_Click);
             // 
+            // dumpGUIFilesToolStripMenuItem
+            // 
+            this.dumpGUIFilesToolStripMenuItem.Name = "dumpGUIFilesToolStripMenuItem";
+            this.dumpGUIFilesToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.dumpGUIFilesToolStripMenuItem.Text = "Dump GUI files";
+            this.dumpGUIFilesToolStripMenuItem.Click += new System.EventHandler(this.dumpGUIFilesToolStripMenuItem_Click);
+            // 
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -371,7 +378,7 @@
             this.toolStripButton3,
             this.gotonumber,
             this.toolStripButton4});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 24);
+            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(1002, 25);
             this.toolStrip1.TabIndex = 1;
@@ -512,7 +519,7 @@
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 49);
+            this.splitContainer1.Location = new System.Drawing.Point(0, 25);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -523,7 +530,7 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.tabControl1);
-            this.splitContainer1.Size = new System.Drawing.Size(1002, 420);
+            this.splitContainer1.Size = new System.Drawing.Size(1002, 444);
             this.splitContainer1.SplitterDistance = 331;
             this.splitContainer1.TabIndex = 3;
             // 
@@ -533,7 +540,7 @@
             this.treeView1.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.treeView1.Location = new System.Drawing.Point(0, 0);
             this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(331, 420);
+            this.treeView1.Size = new System.Drawing.Size(331, 444);
             this.treeView1.TabIndex = 1;
             this.treeView1.Visible = false;
             this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
@@ -549,7 +556,7 @@
             this.listBox1.Location = new System.Drawing.Point(0, 0);
             this.listBox1.Name = "listBox1";
             this.listBox1.ScrollAlwaysVisible = true;
-            this.listBox1.Size = new System.Drawing.Size(331, 420);
+            this.listBox1.Size = new System.Drawing.Size(331, 444);
             this.listBox1.TabIndex = 0;
             this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged_1);
             // 
@@ -567,7 +574,7 @@
             this.tabControl1.Location = new System.Drawing.Point(4, 4);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(660, 413);
+            this.tabControl1.Size = new System.Drawing.Size(660, 437);
             this.tabControl1.TabIndex = 4;
             // 
             // tabPage1
@@ -576,7 +583,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(652, 387);
+            this.tabPage1.Size = new System.Drawing.Size(652, 411);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Hex Editor";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -591,7 +598,7 @@
             this.hb1.Location = new System.Drawing.Point(3, 3);
             this.hb1.Name = "hb1";
             this.hb1.ShadowSelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(60)))), ((int)(((byte)(188)))), ((int)(((byte)(255)))));
-            this.hb1.Size = new System.Drawing.Size(646, 381);
+            this.hb1.Size = new System.Drawing.Size(646, 405);
             this.hb1.StringViewVisible = true;
             this.hb1.TabIndex = 1;
             this.hb1.UseFixedBytesPerLine = true;
@@ -603,7 +610,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(652, 411);
+            this.tabPage2.Size = new System.Drawing.Size(652, 387);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Properties";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -613,7 +620,7 @@
             this.propGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.propGrid.Location = new System.Drawing.Point(3, 3);
             this.propGrid.Name = "propGrid";
-            this.propGrid.Size = new System.Drawing.Size(646, 405);
+            this.propGrid.Size = new System.Drawing.Size(646, 381);
             this.propGrid.TabIndex = 0;
             this.propGrid.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.propGrid_PropertyValueChanged);
             // 
@@ -634,9 +641,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.rtb1.DetectUrls = false;
             this.rtb1.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtb1.Location = new System.Drawing.Point(3, 3);
+            this.rtb1.Location = new System.Drawing.Point(5, 3);
             this.rtb1.Name = "rtb1";
-            this.rtb1.Size = new System.Drawing.Size(851, 611);
+            this.rtb1.Size = new System.Drawing.Size(644, 405);
             this.rtb1.TabIndex = 2;
             this.rtb1.Text = "";
             this.rtb1.WordWrap = false;
@@ -647,7 +654,7 @@
             this.tabPage3.Controls.Add(this.groupBox1);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(652, 411);
+            this.tabPage3.Size = new System.Drawing.Size(652, 387);
             this.tabPage3.TabIndex = 3;
             this.tabPage3.Text = "Info";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -887,7 +894,7 @@
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(652, 411);
+            this.tabPage4.Size = new System.Drawing.Size(652, 387);
             this.tabPage4.TabIndex = 4;
             this.tabPage4.Text = "Meta Data Editor";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -959,7 +966,7 @@
             this.tabPage5.Location = new System.Drawing.Point(4, 22);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(652, 411);
+            this.tabPage5.Size = new System.Drawing.Size(652, 387);
             this.tabPage5.TabIndex = 5;
             this.tabPage5.Text = "Header Raw";
             this.tabPage5.UseVisualStyleBackColor = true;
@@ -974,18 +981,11 @@
             this.hb2.Location = new System.Drawing.Point(3, 3);
             this.hb2.Name = "hb2";
             this.hb2.ShadowSelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(60)))), ((int)(((byte)(188)))), ((int)(((byte)(255)))));
-            this.hb2.Size = new System.Drawing.Size(646, 405);
+            this.hb2.Size = new System.Drawing.Size(646, 381);
             this.hb2.StringViewVisible = true;
             this.hb2.TabIndex = 0;
             this.hb2.UseFixedBytesPerLine = true;
             this.hb2.VScrollBarVisible = true;
-            // 
-            // dumpGUIFilesToolStripMenuItem
-            // 
-            this.dumpGUIFilesToolStripMenuItem.Name = "dumpGUIFilesToolStripMenuItem";
-            this.dumpGUIFilesToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
-            this.dumpGUIFilesToolStripMenuItem.Text = "Dump GUI files";
-            this.dumpGUIFilesToolStripMenuItem.Click += new System.EventHandler(this.dumpGUIFilesToolStripMenuItem_Click);
             // 
             // PCCEditor2
             // 
