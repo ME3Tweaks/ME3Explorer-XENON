@@ -24,14 +24,14 @@ namespace ME3Explorer.Unreal
         //private ushort lowVers  { get { return BitConverter.ToUInt16(header, 4); } }
         //private ushort highVers { get { return BitConverter.ToUInt16(header, 6); } }
         private int nameSize { get { int val = SwapEndianness(BitConverter.ToInt32(header, 12)); return (val < 0) ? val * -2 : val; } } // usually = 10
-        public uint flags { get { return BitConverter.ToUInt32(header, 16 + nameSize); } }
+        public uint flags { get { return (uint) SwapEndianness( (int) BitConverter.ToUInt32(header, 16 + nameSize)); } }
 
         public bool isModified { get { return Exports.Any(entry => entry.hasChanged == true); } }
         public bool bDLCStored = false;
         public bool bExtraNamesList { get { return extraNamesList != null; } }
         public bool bCompressed
         {
-            get { return (flags & 0x02000000) != 0; }
+            get { Debug.WriteLine("Flags: "+flags.ToString("X8")); return (flags & 0x02000000) != 0; }
             set
             {
                 if (value) // sets the compressed flag if bCompressed set equal to true
